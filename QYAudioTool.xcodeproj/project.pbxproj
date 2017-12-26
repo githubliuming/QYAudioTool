@@ -13,6 +13,7 @@
 		8A6AF8D01FF238A800D4B575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AF8CF1FF238A800D4B575 /* Assets.xcassets */; };
 		8A6AF8D31FF238A800D4B575 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AF8D11FF238A800D4B575 /* LaunchScreen.storyboard */; };
 		8A6AF8D61FF238A800D4B575 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AF8D51FF238A800D4B575 /* main.m */; };
+		8A6AF8E01FF23AA800D4B575 /* QYRecordTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AF8DF1FF23AA800D4B575 /* QYRecordTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,10 @@
 		8A6AF8D21FF238A800D4B575 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A6AF8D41FF238A800D4B575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A6AF8D51FF238A800D4B575 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8A6AF8DE1FF23AA800D4B575 /* QYRecordTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QYRecordTool.h; sourceTree = "<group>"; };
+		8A6AF8DF1FF23AA800D4B575 /* QYRecordTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QYRecordTool.m; sourceTree = "<group>"; };
+		8A6AF8E21FF23B4000D4B575 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8A6AF8E31FF23BCC00D4B575 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 			children = (
 				8A6AF8C51FF238A800D4B575 /* QYAudioTool */,
 				8A6AF8C41FF238A800D4B575 /* Products */,
+				8A6AF8E11FF23B4000D4B575 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +64,7 @@
 		8A6AF8C51FF238A800D4B575 /* QYAudioTool */ = {
 			isa = PBXGroup;
 			children = (
+				8A6AF8DC1FF23A2600D4B575 /* class */,
 				8A6AF8C61FF238A800D4B575 /* AppDelegate.h */,
 				8A6AF8C71FF238A800D4B575 /* AppDelegate.m */,
 				8A6AF8C91FF238A800D4B575 /* ViewController.h */,
@@ -69,6 +76,32 @@
 				8A6AF8D51FF238A800D4B575 /* main.m */,
 			);
 			path = QYAudioTool;
+			sourceTree = "<group>";
+		};
+		8A6AF8DC1FF23A2600D4B575 /* class */ = {
+			isa = PBXGroup;
+			children = (
+				8A6AF8DD1FF23A4D00D4B575 /* AduioRecord */,
+			);
+			path = class;
+			sourceTree = "<group>";
+		};
+		8A6AF8DD1FF23A4D00D4B575 /* AduioRecord */ = {
+			isa = PBXGroup;
+			children = (
+				8A6AF8DE1FF23AA800D4B575 /* QYRecordTool.h */,
+				8A6AF8DF1FF23AA800D4B575 /* QYRecordTool.m */,
+			);
+			path = AduioRecord;
+			sourceTree = "<group>";
+		};
+		8A6AF8E11FF23B4000D4B575 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A6AF8E31FF23BCC00D4B575 /* AVFoundation.framework */,
+				8A6AF8E21FF23B4000D4B575 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A6AF8E01FF23AA800D4B575 /* QYRecordTool.m in Sources */,
 				8A6AF8CB1FF238A800D4B575 /* ViewController.m in Sources */,
 				8A6AF8D61FF238A800D4B575 /* main.m in Sources */,
 				8A6AF8C81FF238A800D4B575 /* AppDelegate.m in Sources */,

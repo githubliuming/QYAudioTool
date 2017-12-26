@@ -5,7 +5,7 @@
 //  Created by liuming on 2017/12/26.
 //  Copyright © 2017年 yoyo. All rights reserved.
 //
-
+// 1、音频的录制
 #import "ViewController.h"
 
 @interface ViewController ()
