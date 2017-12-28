@@ -20,6 +20,11 @@ typedef NS_ENUM(NSInteger,QYRecordStatus)
 @protocol QYRecordToolDelegate<NSObject>
 
 - (BOOL)qyRecorderWillRecording:(AVAudioRecorder *)recorder;
+- (void)qyRecorderDidRecording:(AVAudioRecorder *)recorder;
+- (void)qyRecorderDidpauseRecord:(AVAudioRecorder *)recorder;
+- (void)qyRecorderCancelRecord:(AVAudioRecorder *)recorder;
+- (void)qyRecorderFinishRecord:(AVAudioRecorder *)recorder fileUrl:(NSURL *)fileUrl;
+- (void)qyRecorder:(AVAudioRecorder *)recorder error:(NSError *)error;
 @end
 @interface QYRecordTool : NSObject
 

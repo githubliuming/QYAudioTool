@@ -14,6 +14,8 @@
 		8A6AF8D31FF238A800D4B575 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AF8D11FF238A800D4B575 /* LaunchScreen.storyboard */; };
 		8A6AF8D61FF238A800D4B575 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AF8D51FF238A800D4B575 /* main.m */; };
 		8A6AF8E01FF23AA800D4B575 /* QYRecordTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6AF8DF1FF23AA800D4B575 /* QYRecordTool.m */; };
+		8A7FE3AB1FF4A0A500FF9C9E /* ExtAudioConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7FE3A91FF4A0A500FF9C9E /* ExtAudioConverter.m */; };
+		8AB856311FF3AF5E00E1320B /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AB8562D1FF3AF5E00E1320B /* libmp3lame.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,10 @@
 		8A6AF8DF1FF23AA800D4B575 /* QYRecordTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QYRecordTool.m; sourceTree = "<group>"; };
 		8A6AF8E21FF23B4000D4B575 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8A6AF8E31FF23BCC00D4B575 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8A7FE3A91FF4A0A500FF9C9E /* ExtAudioConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtAudioConverter.m; sourceTree = "<group>"; };
+		8A7FE3AA1FF4A0A500FF9C9E /* ExtAudioConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtAudioConverter.h; sourceTree = "<group>"; };
+		8AB8562D1FF3AF5E00E1320B /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		8AB856301FF3AF5E00E1320B /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AB856311FF3AF5E00E1320B /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +88,7 @@
 		8A6AF8DC1FF23A2600D4B575 /* class */ = {
 			isa = PBXGroup;
 			children = (
+				8AB8562A1FF3AF2400E1320B /* QYTransCoding */,
 				8A6AF8DD1FF23A4D00D4B575 /* AduioRecord */,
 			);
 			path = class;
@@ -102,6 +110,49 @@
 				8A6AF8E21FF23B4000D4B575 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8AB8562A1FF3AF2400E1320B /* QYTransCoding */ = {
+			isa = PBXGroup;
+			children = (
+				8A7FE3AA1FF4A0A500FF9C9E /* ExtAudioConverter.h */,
+				8A7FE3A91FF4A0A500FF9C9E /* ExtAudioConverter.m */,
+				8AB8562B1FF3AF5500E1320B /* lame */,
+			);
+			path = QYTransCoding;
+			sourceTree = "<group>";
+		};
+		8AB8562B1FF3AF5500E1320B /* lame */ = {
+			isa = PBXGroup;
+			children = (
+				8AB8562E1FF3AF5E00E1320B /* include */,
+				8AB8562C1FF3AF5E00E1320B /* lib */,
+			);
+			path = lame;
+			sourceTree = "<group>";
+		};
+		8AB8562C1FF3AF5E00E1320B /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				8AB8562D1FF3AF5E00E1320B /* libmp3lame.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		8AB8562E1FF3AF5E00E1320B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				8AB8562F1FF3AF5E00E1320B /* lame */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		8AB8562F1FF3AF5E00E1320B /* lame */ = {
+			isa = PBXGroup;
+			children = (
+				8AB856301FF3AF5E00E1320B /* lame.h */,
+			);
+			path = lame;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +186,7 @@
 				TargetAttributes = {
 					8A6AF8C21FF238A800D4B575 = {
 						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -177,6 +228,7 @@
 			files = (
 				8A6AF8E01FF23AA800D4B575 /* QYRecordTool.m in Sources */,
 				8A6AF8CB1FF238A800D4B575 /* ViewController.m in Sources */,
+				8A7FE3AB1FF4A0A500FF9C9E /* ExtAudioConverter.m in Sources */,
 				8A6AF8D61FF238A800D4B575 /* main.m in Sources */,
 				8A6AF8C81FF238A800D4B575 /* AppDelegate.m in Sources */,
 			);
@@ -312,11 +364,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = FJV2B9GPDW;
 				INFOPLIST_FILE = QYAudioTool/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.catch.QYAudioTool;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QYAudioTool/class/QYTransCoding/lame/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoyoshijie.philm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3aeacfd8-cfac-4028-a7e1-75912749ac2d";
+				PROVISIONING_PROFILE_SPECIFIER = com.yoyoshijie.philm.beta;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -325,11 +385,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = FJV2B9GPDW;
 				INFOPLIST_FILE = QYAudioTool/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.catch.QYAudioTool;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QYAudioTool/class/QYTransCoding/lame/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoyoshijie.philm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3aeacfd8-cfac-4028-a7e1-75912749ac2d";
+				PROVISIONING_PROFILE_SPECIFIER = com.yoyoshijie.philm.beta;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

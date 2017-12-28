@@ -14,19 +14,6 @@
 @property(nonatomic,strong) AVAudioRecorder  * recorder;
 @end
 @implementation QYRecordTool
-
-//- (instancetype) shareInstanced
-//{
-//    static QYRecordTool * tool;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        if (!tool)
-//        {
-//            tool = [[QYRecordTool alloc] init];
-//        }
-//    });
-//    return tool;
-//}
 - (instancetype) init{
     
     self = [super init];
@@ -34,42 +21,66 @@
     {
         
     }
-    
     return self;
 }
 - (BOOL)configAudioSession
 {
     AVAudioSession * session = [AVAudioSession sharedInstance];
     NSError * error;
-  BOOL result = [session setMode:AVAudioSessionCategoryPlayAndRecord error:&error];
-    if (!result)
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [session setActive:YES error:&error];
+    if (error)
     {
         
-        NSLog(@"配置失败 当前使用的模式是 :%@  error info = %@",session.mode,[error userInfo]);
+        NSLog(@"配置失败 当前使用的模式是 :%@  error info = %@",session.mode,error);
     } else {
         
         NSLog(@"配置成功，当前使用的模式是 AVAudioSessionCategoryPlayAndRecord");
     }
     
-    return result;
+    return (error == nil);
 }
 - (void)confingRecorderWithSettingDic:(NSDictionary<NSString * ,id> *)settingDic
                              filePath:(NSString *)filePath{
     
+    [self configAudioSession];
     if (!settingDic)
     {
+        
+        /////LinearPCM 是iOS的一种无损编码格式,但是体积较为庞大
+        //录音设置
+       // NSMutableDictionary *recordSettings = [[NSMutableDictionary alloc] init];
+        //录音格式 无法使用
+       // [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey: AVFormatIDKey];
+        //采样率
+       // [recordSettings setValue :[NSNumber numberWithFloat:11025.0] forKey: AVSampleRateKey];//44100.0
+        //通道数
+      //  [recordSettings setValue :[NSNumber numberWithInt:2] forKey: AVNumberOfChannelsKey];
+        //线性采样位数
+        //[recordSettings setValue :[NSNumber numberWithInt:16] forKey: AVLinearPCMBitDepthKey];
+        //音频质量,采样质量
+        //[recordSettings setValue:[NSNumber numberWithInt:AVAudioQualityMin] forKey:AVEncoderAudioQualityKey];
+        
         NSLog(@"配置字典wei nil 使用默认配置字典");
-        settingDic = @{AVFormatIDKey:@(kAudioFormatMPEG4AAC),
-                       AVSampleRateKey:@22050.0f,
+        settingDic = @{AVFormatIDKey:@(kAudioFormatLinearPCM),
+                       AVSampleRateKey:@(8000),
                        AVNumberOfChannelsKey:@1,
-                       AVEncoderAudioQualityKey:@(AVAudioQualityMin)
+                       AVEncoderAudioQualityKey:@(AVAudioQualityMin),
+                       AVLinearPCMBitDepthKey:@(8),
+                       AVLinearPCMIsFloatKey:@(YES)
                        };
     }
     if (filePath.length == 0)
     {
         NSLog(@"文件输出路径为空，使用默认路径");
         NSString * documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-        filePath = [documentPath stringByAppendingPathComponent:@"audioRecord/record.mp3"];
+        filePath = [documentPath stringByAppendingPathComponent:@"audioRecord/"];
+        
+        if (![[NSFileManager  defaultManager] fileExistsAtPath:filePath])
+        {
+            [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        filePath = [NSString stringWithFormat:@"%@/record.caf",filePath];
     }
     NSError * error;
     self.recorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:filePath]
@@ -92,20 +103,94 @@
     {
        result = [self.delegate qyRecorderWillRecording:self.recorder];
     }
+    
     if (result)
     {
         _status = QYRecordStatusWillRecord;
-        [self micPhonePermissions:^(BOOL ishave) {
-           
+        if ([self.recorder prepareToRecord])
+        {
+            [self micPhonePermissions:^(BOOL ishave)
+             {
+                 _status = QYRecordStatusRecording;
+                 [self.recorder record];
+                 if (self.delegate && [self.delegate respondsToSelector:@selector(qyRecorderDidRecording:)])
+                 {
+                     [self.delegate qyRecorderDidRecording:self.recorder];
+                 }
+             }];
+        } else {
             
-        }];
-    }
-    if ([self.recorder prepareToRecord])
-    {
-        
+            NSLog(@"prepare to recrod error");
+        }
     }
     
 }
+
+/**
+ 结束录制
+ */
+- (void)endRecord
+{
+    [self.recorder stop];
+}
+
+/**
+ 暂停录制
+ */
+- (void) pauseRecord
+{
+    if ([self.recorder isRecording])
+    {
+        _status = QYRecordStatusPause;
+        [self.recorder pause];
+    }
+}
+
+- (void)resumeRecord{
+    
+    if (_status == QYRecordStatusPause)
+    {
+        _status = QYRecordStatusRecording;
+        [self.recorder record];
+    }
+    
+}
+/**
+ 取消录制
+ */
+- (void) cancelRecord
+{
+    [self.recorder stop];
+    [self.recorder deleteRecording];
+    _status = QYRecordStatusRest;
+}
+
+#pragma mark - AVAudioRecorderDelegate代理方法
+/* 完成录音会调用 */
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
+                           successfully:(BOOL)flag
+{
+    //录音完成后自动播放录音
+    if (flag)
+    {
+        _status = QYRecordStatusRest;
+        if (self.delegate &&  [self.delegate respondsToSelector:@selector(qyRecorderFinishRecord:fileUrl:)])
+        {
+            [self.delegate qyRecorderFinishRecord:self.recorder fileUrl:self.recorder.url];
+        }
+    }
+}
+
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError * __nullable)error
+{
+    //录音编码出错信息
+    if (self.delegate && [self.delegate respondsToSelector:@selector(qyRecorder:error:)])
+    {
+        _status = QYRecordStatusRest;
+        [self.delegate qyRecorder:recorder error:error];
+    }
+}
+
 // 判断麦克风权限
 - (void)micPhonePermissions:(void (^)(BOOL ishave))block  {
     __block BOOL ret = NO;
